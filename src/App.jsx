@@ -1,9 +1,36 @@
 import React from 'react'
 
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import Login from './pages/Auth/Login'
+import SignUp from './pages/Auth/SignUp'
+import Home from './pages/Dashboard/Home'
+import Income from './pages/Dashboard/Income'
+import Expense from './pages/Dashboard/Expense'
+
 const App = () => {
   return (
-    <div className='text-3xl text-red-500'>App</div>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Root />} />
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/signUp" exact element={<SignUp />} />
+          <Route path="/dashboard" element={<Home />} />
+          <Route path="/income" element={<Income />} />
+          <Route path="/expense" element={<Expense />} />
+
+
+        </Routes>
+      </Router>
+    </>
   )
 }
 
 export default App
+
+const Root = () => {
+  // check if user is exist in local storage
+  const isAuthenticated = !!localStorage.getItem('token')
+  // if user is authenticated, redirect to dashboard else to login
+  return isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login" />
+};
