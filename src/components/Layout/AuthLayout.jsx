@@ -9,9 +9,7 @@ const AuthLayout = ({ children }) => {
                 {children}
             </div>
             <div className=' flex justify-center items-center'>
-                <div className=''> </div>
-                <div className=''></div>
-                <div className=''></div>
+
                 <img src={LoginImg} alt="Login" className='w-[40vw] h-screen object-cover hidden md:block' />
             </div>
         </div>
