@@ -1,4 +1,5 @@
 import React from 'react'
+import { LuUser, LuUpload, LuTrash } from 'react-icons/lu'
 
 const ProfilePhotoSelector = ({ image, setImage }) => {
 
@@ -28,14 +29,15 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
         }
     }
     return (
-        <div>
-            <label htmlFor="profilePic" className="block text-sm font-medium text-gray-700 mb-1">Profile Picture</label>
+        <div className='flex justify-center mb-6'>
             <input
                 type="file"
                 id="profilePic"
                 accept="image/*"
+                label="Profile Photo"
+                ref={inputRef}
                 onChange={handleImageChange}
-                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                className=""
             />
         </div>
     )
