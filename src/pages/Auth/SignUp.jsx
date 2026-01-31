@@ -16,7 +16,7 @@ const SignUp = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!name || !email || !password || !confirmPassword) {
+        if (!name || !email || !password) {
             setError('All fields are required')
             return
         }
@@ -24,11 +24,10 @@ const SignUp = () => {
             setError('Please enter a valid email')
             return
         }
-        if (password !== confirmPassword) {
-            setError('Passwords do not match')
-            return
-        }
+
         // Add signup logic here
+        let profileImageUrl = " ";
+
     }
 
     return (
@@ -72,7 +71,11 @@ const SignUp = () => {
                     {error && (
                         <p className='text-red-500 text-xs mb-2'>{error}</p>
                     )}
-                    <button type='submit' className='w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300'>Sign Up</button>
+                    <button type='submit' className='w-full bg-primary hover:bg-purple-400 text-white py-2 px-4 rounded-md transition duration-300'>Sign Up</button>
+                    {error && <p className='text-red-500 text-sm pb-2.5'>{error}</p>
+                    }
+
+                    <p className='text-slate-800 mt-3'>Already have an account? <Link to="/login" className='text-primary font-medium underline'>Login</Link></p>
                 </form>
             </div>
         </AuthLayout>
