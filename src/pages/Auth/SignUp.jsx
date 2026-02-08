@@ -4,6 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import Input from '../../components/Inputs/Input'
 import { validateEmail } from '../../utils/helper'
 import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector'
+import axiosInstance from '../../utils/axiosInstance.js'
+import { API_PATHS } from '../../utils/apiPath.js'
+import { UserContext } from '../../context/userContext'
+import uploadProfilePicture from '../../utils/uploadImage.js'
 
 
 const SignUp = () => {
@@ -12,10 +16,15 @@ const SignUp = () => {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [error, setError] = React.useState('')
+
+    const { updateUser } = React.useContext(UserContext);
+
     const navigate = useNavigate()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+
+        let profileImageUrl = '';
         if (!name || !email || !password) {
             setError('All fields are required')
             return
@@ -26,7 +35,40 @@ const SignUp = () => {
         }
 
         // Add signup logic here
-        let profileImageUrl = " ";
+
+        try {
+            if (profilePic) {
+                const imgUploadRes = await uploadProfilePicture(profilePic);
+                profileImageUrl = imgUploadRes.imageUrl;
+            }
+
+            const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+                name,
+                email,
+                password,
+                profileImageUrl: profileImageUrl
+            });
+            console.log("Signup successful:", name,
+                email,
+                password,
+            );
+            const { token, user } = response.data;
+
+            // Save token to localStorage or context
+            if (token) {
+                localStorage.setItem('token', token);
+                navigate('/dashboard');
+                updateUser(user);
+            }
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                setError(error.response.data.message)
+                console.error("Signup error:", error.response.data.message);
+            }
+            else {
+                setError('An error occurred. Please try again later.')
+            }
+        }
 
     }
 
@@ -61,7 +103,7 @@ const SignUp = () => {
                         <Input
                             type="password"
                             id="password"
-                            placeholder="Enter your password(min 8 characters)"
+                            placeholder="Enter your password(min 6 characters)"
                             value={password}
                             label="Password"
                             onChange={(e) => setPassword(e.target.value)}
