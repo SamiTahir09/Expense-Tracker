@@ -36,7 +36,7 @@ const Login = () => {
                 password
             });
             const { token, user } = response.data;
-
+            console.log("Received user:", user);
             if (token) {
                 localStorage.setItem('token', token);
                 // update user context

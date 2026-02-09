@@ -35,7 +35,6 @@ const SignUp = () => {
         }
 
         // Add signup logic here
-
         try {
             if (profilePic) {
                 const imgUploadRes = await uploadProfilePicture(profilePic);
@@ -46,20 +45,22 @@ const SignUp = () => {
                 name,
                 email,
                 password,
-                profileImageUrl: profileImageUrl
+                profileImageUrl,
             });
-            console.log("Signup successful:", name,
-                email,
-                password,
-            );
+
             const { token, user } = response.data;
 
-            // Save token to localStorage or context
             if (token) {
-                localStorage.setItem('token', token);
-                navigate('/dashboard');
-                updateUser(user);
+                localStorage.setItem("token", token, user);
+                localStorage.setItem("user", JSON.stringify(user));
+
+                if (user) {
+                    updateUser(user);
+                }
+
+                navigate("/dashboard");
             }
+
         } catch (error) {
             if (error.response && error.response.data.message) {
                 setError(error.response.data.message)

@@ -4,7 +4,6 @@ export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-
   // update user data
   const updateUser = (userData) => {
     setUser(userData);
