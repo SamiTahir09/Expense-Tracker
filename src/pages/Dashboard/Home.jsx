@@ -10,6 +10,9 @@ import { LuHandCoins, LuWalletMinimal } from 'react-icons/lu';
 import { addThousendsSeperator } from '../../utils/helper';
 import RecentTransactions from '../../components/Dashboard/RecentTransactions';
 import FinanceOverview from '../../components/Dashboard/FinanceOverview';
+import ExpenseTransactions from '../../components/Dashboard/ExpenseTransactions';
+import Last30DaysExpenses from '../../components/Dashboard/Last30DaysExpenses';
+import RecentIncomeViewChart from '../../components/Dashboard/RecentIncomeViewChart';
 
 const Home = () => {
     useUserAuth();
@@ -74,6 +77,18 @@ const Home = () => {
                         totalIncome={dashboardData?.totalIncome || 600}
                         totalExpense={dashboardData?.totalExpense || 300}
                     />
+                    <ExpenseTransactions
+                        transactions={dashboardData?.Last30DaysExpenses?.transactions}
+                        onSeeMore={() => navigate("/expense")}
+                    />
+                    <Last30DaysExpenses
+                        data={dashboardData?.Last30DaysExpenses?.transactions}
+
+                    />
+                    {/* <RecentIncomeViewChart
+                        data={dashboardData?.Last60DaysIncome?.transactions.slice(0, 4) || 300}
+                        totalIncome={dashboardData?.totalIncome}
+                    /> */}
                 </div>
             </div>
         </DashboardLayout>
