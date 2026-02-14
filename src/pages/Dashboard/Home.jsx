@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DashboardLayout from '../../components/Layout/DashboardLayout'
 import { useUserAuth } from '../../hooks/useUserAuth'
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPath';
+import { IoMdCard } from 'react-icons/io';
+import InfoCard from '../../components/Cards/InfoCard';
+import { LuHandCoins, LuWalletMinimal } from 'react-icons/lu';
+import { addThousendsSeperator } from '../../utils/helper';
+import RecentTransactions from '../../components/Dashboard/RecentTransactions';
+import FinanceOverview from '../../components/Dashboard/FinanceOverview';
 
 const Home = () => {
     useUserAuth();
@@ -24,13 +30,51 @@ const Home = () => {
                 setDashboardData(response.data)
             }
         } catch (error) {
-
+            console.log("Something went wrong", error)
+        } finally {
+            setLoading(false)
         }
-    }
+    };
+
+    useEffect(() => {
+        fetchDashboardData();
+        return () => { };
+    }, [])
     return (
         <DashboardLayout activeMenu="Dashboard">
             <div className='my-5 mx-auto'>
-                home
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+                    <InfoCard
+                        icon={<IoMdCard />}
+                        label="Total Balance"
+                        value={addThousendsSeperator(dashboardData?.totalBalance || 0)}
+                        color="bg-primary"
+                    />
+                    <InfoCard
+                        icon={<LuWalletMinimal />}
+                        label="Total Income"
+                        value={addThousendsSeperator(dashboardData?.totalIncome || 0)}
+                        color="bg-orange-500"
+                    />
+                    <InfoCard
+                        icon={<LuHandCoins />}
+                        label="Total Expense"
+                        value={addThousendsSeperator(dashboardData?.totalExpense || 0)}
+                        color="bg-red-500"
+                    />
+
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-6'>
+                    <RecentTransactions
+                        transactions={dashboardData?.recentTransactions}
+                        onSeeMore={() => navigate("/expense")}
+                    />
+                    <FinanceOverview
+                        totalBalance={dashboardData?.totalBalance || 500}
+                        totalIncome={dashboardData?.totalIncome || 600}
+                        totalExpense={dashboardData?.totalExpense || 300}
+                    />
+                </div>
             </div>
         </DashboardLayout>
     )
