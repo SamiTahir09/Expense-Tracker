@@ -85,10 +85,10 @@ const Home = () => {
                         data={dashboardData?.Last30DaysExpenses?.transactions}
 
                     />
-                    {/* <RecentIncomeViewChart
+                    <RecentIncomeViewChart
                         data={dashboardData?.Last60DaysIncome?.transactions.slice(0, 4) || 300}
                         totalIncome={dashboardData?.totalIncome}
-                    /> */}
+                    />
                 </div>
             </div>
         </DashboardLayout>
