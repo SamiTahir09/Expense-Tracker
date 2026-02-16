@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CustomPieChart from '../Charts/CustomPieChart';
 
-const RecentIncomeViewChart = ({ data, totalIncome }) => {
+const RecentIncomeViewChart = ({ data = [{ name: "salary", amount: "4000" }, { name: "salary", amount: "4000" }], totalIncome = 5000 }) => {
 
     const [chartData, setchartData] = useState([]);
 
