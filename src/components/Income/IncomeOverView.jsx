@@ -10,8 +10,7 @@ const IncomeOverView = ({ transactions, onAddIncome }) => {
         const result = prepareIncomeBarchartData(transactions);
         setchartData(result);
 
-        return () => { };
-    }, []);
+    }, [transactions]);
     return (
         <div className='card'>
             <div className='flex items-center justify-between'>

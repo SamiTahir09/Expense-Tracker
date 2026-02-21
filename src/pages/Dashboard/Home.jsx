@@ -18,9 +18,11 @@ import Recentincome from '../../components/Dashboard/Recentincome';
 const Home = () => {
     useUserAuth();
 
+
     const navigate = useNavigate();
     const [dashboardData, setDashboardData] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
+
 
 
     const fetchDashboardData = async () => {
@@ -39,6 +41,8 @@ const Home = () => {
             setLoading(false)
         }
     };
+
+    console.log("dashboard data", dashboardData)
 
     useEffect(() => {
         fetchDashboardData();

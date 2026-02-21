@@ -3,10 +3,12 @@ import DashboardLayout from '../../components/Layout/DashboardLayout'
 import IncomeOverView from '../../components/Income/IncomeOverView'
 import axiosInstance from '../../utils/axiosInstance'
 import { API_PATHS } from '../../utils/apiPath'
+import Modal from '../../components/Modal'
+import AddIncomeForm from '../../components/Income/AddIncomeForm'
+import toast from 'react-hot-toast'
 
 const Income = () => {
     const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false)
-
     const [incomeData, setIncomeData] = useState([]);
     const [Loading, setLoading] = useState(false)
     const [openDeleteAlert, setOpenDeleteAlert] = useState({
@@ -32,9 +34,36 @@ const Income = () => {
         }
     };
 
+
     //handle add income 
     const handleAddIncome = async (income) => {
+        const { source, amount, date, icon } = income;
 
+        //validations checks 
+        if (!source.trim()) {
+            toast.error("Source is required.")
+            return
+        }
+        if (!amount || isNaN(amount) || Number(amount) <= 0) {
+            toast.error("amount should be  valid number greater than 0.")
+        }
+        if (!date) {
+            toast.error("Date is required")
+
+        }
+        try {
+            await axiosInstance.post(API_PATHS.INCOME.ADD_INCOME, {
+                source,
+                amount,
+                date,
+                icon
+            });
+            setOpenAddIncomeModal(false);
+            toast.success("Income Added Successfully");
+            fetchIncomeDetails();
+        } catch (error) {
+            console.error(error.response?.data?.message || error.message)
+        }
     };
     //delete income
     const deleteIncome = async (id) => { };
@@ -60,6 +89,15 @@ const Income = () => {
                         />
                     </div>
                 </div>
+                <Modal
+                    isOpen={openAddIncomeModal}
+                    onClose={() => setOpenAddIncomeModal(false)}
+                    title="Add Income"
+                >
+                    <AddIncomeForm
+                        onAddIncome={handleAddIncome}
+                    />
+                </Modal>
             </div>
         </DashboardLayout>
     )

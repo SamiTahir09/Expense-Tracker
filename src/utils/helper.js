@@ -25,12 +25,14 @@ export const prepareExpenseBarChartData = (data = []) => {
 
 export const prepareIncomeBarchartData = (data = []) => {
   const sortedData = [...data].sort(
-    (a, b) => new Date(a.data) - new Date(b.Date),
+    (a, b) => new Date(a.date) - new Date(b.date),
   );
-  const ChartData = sortedData.map((item) => ({
+
+  const chartData = sortedData.map((item) => ({
     month: moment(item?.date).format("Do MMM"),
     amount: item?.amount,
     source: item?.source,
   }));
-  return ChartData;
+
+  return chartData;
 };
