@@ -42,7 +42,6 @@ const Home = () => {
         }
     };
 
-    console.log("dashboard data", dashboardData)
 
     useEffect(() => {
         fetchDashboardData();
@@ -87,15 +86,16 @@ const Home = () => {
                         onSeeMore={() => navigate("/expense")}
                     />
                     <Last30DaysExpenses
-                        data={dashboardData?.Last30DaysExpenses?.transactions}
+                        data={dashboardData?.totalExpenseLast30Days?.transactions}
 
                     />
-                    {/* <RecentIncomeViewChart
-                        data={dashboardData?.Last60DaysIncome?.transactions.slice(0, 4)}
+                    <RecentIncomeViewChart
+                        data={dashboardData?.totalIncomeLast60Days?.transactions}
                         totalIncome={dashboardData?.totalIncome}
-                    /> */}
+                    />
+
                     <Recentincome
-                        transactions={dashboardData?.Last60DaysIncome?.transactions}
+                        transactions={dashboardData?.totalIncomeLast60Days?.transactions}
                         onSeeMore={() => navigate("/income")}
                     />
                 </div>
