@@ -42,7 +42,7 @@ const CustomBarChart = ({ data }) => {
                     <CartesianGrid stroke='none' />
 
                     {/* FIX HERE */}
-                    <XAxis dataKey="month" stroke='none' />
+                    <XAxis dataKey="category" stroke='none' />
                     <YAxis stroke='none' />
 
                     <Tooltip content={customTooltip} />
