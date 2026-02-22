@@ -8,8 +8,10 @@ import AddIncomeForm from '../../components/Income/AddIncomeForm'
 import toast from 'react-hot-toast'
 import IncomeList from '../../components/Income/IncomeList'
 import DeleteAlert from '../../components/DeleteAlert'
+import { useUserAuth } from '../../hooks/useUserAuth'
 
 const Income = () => {
+    useUserAuth();
     const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false)
     const [incomeData, setIncomeData] = useState([]);
     const [Loading, setLoading] = useState(false)
@@ -68,20 +70,20 @@ const Income = () => {
         }
     };
     //delete income
-    // const deleteIncome = async (id) => {
-    //     try {
-    //         await axiosInstance.delete(`${API_PATHS.INCOME.DELETE_INCOME}/${id}`);
+    const deleteIncome = async (id) => {
+        try {
+            await axiosInstance.delete(API_PATHS.INCOME.DELETE_INCOME(id));
 
-    //         toast.success("Income deleted successfully");
+            toast.success("Income deleted successfully");
 
-    //         setOpenDeleteAlert({ show: false, data: null });
+            setOpenDeleteAlert({ show: false, data: null });
 
-    //         fetchIncomeDetails();
-    //     } catch (error) {
-    //         console.error(error.response?.data?.message || error.message);
-    //         toast.error("Delete failed");
-    //     }
-    // };
+            fetchIncomeDetails();
+        } catch (error) {
+            console.error(error.response?.data?.message || error.message);
+            toast.error("Delete failed");
+        }
+    };
 
     //handle download income details
 

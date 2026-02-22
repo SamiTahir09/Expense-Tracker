@@ -21,7 +21,7 @@ const Recentincome = ({ onSeeMore, transactions = [{ title: "income", icon: <LuA
                         date={moment(item.date).format("Do MMM YYYY")}
                         amount={item.amount}
                         type="income"
-                        hideDeleteBtn
+
                     />
                 ))}
 
